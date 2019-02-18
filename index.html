@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<script type="text/javascript">
+
+            function ausrechnen() 
+            {
+                var antwort_b = 0;
+
+                if (document.getElementById("datei1").value) {antwort_b += parseFloat(document.getElementById("datei1").value);}
+                if (document.getElementById("datei2").value) {antwort_b += parseFloat(document.getElementById("datei2").value);}
+                if (document.getElementById("datei3").value) {antwort_b += parseFloat(document.getElementById("datei3").value);}
+                if (document.getElementById("datei4").value) {antwort_b += parseFloat(document.getElementById("datei4").value);}
+                if (document.getElementById("datei5").value) {antwort_b += parseFloat(document.getElementById("datei5").value);}
+                if (document.getElementById("datei6").value) {antwort_b += parseFloat(document.getElementById("datei6").value);}
+                if (document.getElementById("datei7").value) {antwort_b += parseFloat(document.getElementById("datei7").value);}
+                if (document.getElementById("datei8").value) {antwort_b += parseFloat(document.getElementById("datei8").value);}
+                if (document.getElementById("datei9").value) {antwort_b += parseFloat(document.getElementById("datei9").value);}
+                if (document.getElementById("datei10").value) {antwort_b += parseFloat(document.getElementById("datei10").value);}
+                if (document.getElementById("datei11").value) {antwort_b += parseFloat(document.getElementById("datei11").value);}
+                if (document.getElementById("datei12").value) {antwort_b += parseFloat(document.getElementById("datei12").value);}
+
+                var antwort_kb = Math.round((antwort_b / 1024) * 100) / 100 ;
+                var antwort_mb = Math.round((antwort_kb / 1024) * 100) / 100 ;
+                var antwort_gb = Math.round((antwort_gb / 1024) * 100) / 100 ;
+
+
+                document.getElementById("resultat_b").innerHTML = antwort_b;
+                document.getElementById("resultat_kb").innerHTML = antwort_kb;
+                document.getElementById("resultat_mb").innerHTML = antwort_mb;
+                document.getElementById("resultat_gb").innerHTML = antwort_gb;
+            };
+        </script>
+    <head>
+        <meta charset="utf-8"> <title>Dateigrössen Rechnen</title> </head>
+    <body>
+        <h1>Multiplikation</h1>
+
+        <center>
+
+
+        <form>
+            <p>Grösse Datei 01 in Byte: <input type="number" id="datei1"> </p>
+            <p>Grösse Datei 02 in Byte: <input type="number" id="datei2"> </p>
+            <p>Grösse Datei 03 in Byte: <input type="number" id="datei3"> </p>
+            <p>Grösse Datei 04 in Byte: <input type="number" id="datei4"> </p>
+            <p>Grösse Datei 05 in Byte: <input type="number" id="datei5"> </p>
+            <p>Grösse Datei 06 in Byte: <input type="number" id="datei6"> </p>
+            <p>Grösse Datei 07 in Byte: <input type="number" id="datei7"> </p>
+            <p>Grösse Datei 08 in Byte: <input type="number" id="datei8"> </p>
+            <p>Grösse Datei 09 in Byte: <input type="number" id="datei9"> </p>
+            <p>Grösse Datei 10 in Byte: <input type="number" id="datei10"> </p>
+            <p>Grösse Datei 11 in Byte: <input type="number" id="datei11"> </p>
+            <p>Grösse Datei 12 in Byte: <input type="number" id="datei12"> </p>
+
+            <input type="button" name="Ausrechnen" onclick="ausrechnen()" value="Ausrechnen">
+        </form>
+        <h2>Das Total ist:</h2>
+        <table>
+        <tr><td style="min-width: 40px" id="resultat_b"></td><td>B</td></tr>
+        <tr><td id="resultat_kb"></td><td>MB</td></tr>
+        <tr><td id="resultat_mb"></td><td>MB</td></tr>
+        <tr><td id="resultat_gb"></td><td>GB</td></tr>
+
+        </table>
+    </center>
+        
+
+
+    </body> 
+</html>
