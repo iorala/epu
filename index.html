@@ -24,10 +24,10 @@
                 var antwort_gb = Math.round((antwort_mb / 1024) * 100) / 100 ;
 
 
-                document.getElementById("resultat_b").innerHTML = antwort_b;
-                document.getElementById("resultat_kb").innerHTML = antwort_kb;
-                document.getElementById("resultat_mb").innerHTML = antwort_mb;
-                document.getElementById("resultat_gb").innerHTML = antwort_gb;
+                document.getElementById("resultat_b").innerHTML = antwort_b + " B";
+                document.getElementById("resultat_kb").innerHTML = antwort_kb + " kB";
+                document.getElementById("resultat_mb").innerHTML = antwort_mb + " MB";
+                document.getElementById("resultat_gb").innerHTML = antwort_gb + " GB";
             };
         </script>
     <head>
@@ -52,10 +52,10 @@
         </form>
         <h2>Das Total ist:</h2>
         <table style="text-align: right;">
-        <tr><td style="min-width: 60px; font-weight: bold;" id="resultat_b"></td><td style="text-align: left; padding-left: 20px;">B</td></tr>
-        <tr><td style="font-weight: bold;" id="resultat_kb"></td><td style="text-align: left; padding-left: 20px;">kB</td></tr>
-        <tr><td style="font-weight: bold;" id="resultat_mb"></td><td style="text-align: left; padding-left: 20px;">MB</td></tr>
-        <tr><td style="font-weight: bold;" id="resultat_gb"></td><td style="text-align: left; padding-left: 20px;">GB</td></tr>
+        <tr><td style="min-width: 60px; font-weight: bold;" id="resultat_b"></td></tr>
+        <tr><td style="font-weight: bold;" id="resultat_kb"></td></tr>
+        <tr><td style="font-weight: bold;" id="resultat_mb"></td></tr>
+        <tr><td style="font-weight: bold;" id="resultat_gb"></td></tr>
 
         </table>
     </body> 
