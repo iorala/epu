@@ -3,16 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Datei-Formular</title>
+    <title>ETHZ.size berechnen</title>
+    <!-- Fügen Sie Bootstrap-CSS hinzu (Sie können dies entsprechend Ihrem Projekt anpassen) -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
-<body>
+<body class="container">
 
-<h1>Datei-Formular</h1>
+<div class="jumbotron mt-4">
+    <h1 class="display-4">ETHZ.size berechnen</h1>
+    <p class="lead"> Gemäss den Zeilen aus dem Upload formular im Workflow</p>
+</div>
 
-<textarea id="fileInfo" placeholder="Fügen Sie Dateiinformationen ein..." rows="10" cols="50"></textarea>
-<button onclick="generateForm()">Formular generieren</button>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="fileInfo">Dateiinformationen:</label>
+            <textarea class="form-control" id="fileInfo" placeholder="Fügen Sie Dateiinformationen ein..." rows="10"></textarea>
+        </div>
+        <div>
+        <button class="btn btn-primary" onclick="generateForm()">Formular generieren</button>
+        </div>
+        <div id="output"></div>
+    </div>
 
-<div id="output"></div>
+    <div class="col-md-6">
+        <div class="alert alert-info" role="alert">
+            <h4 class="alert-heading">Anleitung:</h4>
+            <p> Diese Formular zählt die ANzahl dateien und das Total der grössen Zusammen und gibt es in bytes, KB, MB und GB aus </p>
+            <hr>
+            <p class="mb-0">Bitte verwenden Sie das Textfeld, um Dateiinformationen einzufügen.</p>
+            
+            <!-- Hier wird ein Link zu einem Beispielbild eingefügt -->
+            <a href="screenshot.png" target="_blank">
+                <img src="screenshot.png" alt="Beispielbild" class="img-fluid mt-3">
+            </a>
+        </div>
+
+        
+    </div>
+</div>
+
+<!-- Fügen Sie Bootstrap-JS hinzu (Sie können dies entsprechend Ihrem Projekt anpassen) -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
 
 <script>
 function generateForm() {
@@ -39,7 +74,7 @@ function generateForm() {
 
     // Formatieren Sie die Gesamtgröße in Bytes, Kilobytes, Megabytes und Gigabytes
     var totalBytes = totalSize + ' bytes';
-    var totalKilobytes = (totalSize / 1024).toFixed(2) + ' KB';
+    var totalKilobytes = (totalSize / 1024).toFixed(2) + ' kB';
     var totalMegabytes = (totalSize / (1024 * 1024)).toFixed(2) + ' MB';
     var totalGigabytes = (totalSize / (1024 * 1024 * 1024)).toFixed(2) + ' GB';
 
