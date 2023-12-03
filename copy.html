@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datei-Formular</title>
+</head>
+<body>
+
+<h1>Datei-Formular</h1>
+
+<textarea id="fileInfo" placeholder="Fügen Sie Dateiinformationen ein..." rows="10" cols="50"></textarea>
+<button onclick="generateForm()">Formular generieren</button>
+
+<div id="output"></div>
+
+<script>
+function generateForm() {
+    // Holen Sie den Inhalt des Textfelds
+    var fileInfo = document.getElementById('fileInfo').value.trim();
+
+    // Teilen Sie den Inhalt in Zeilen auf
+    var lines = fileInfo.split('\n');
+
+    // Zählen Sie die Anzahl der Dateien und berechnen Sie die Gesamtgröße
+    var fileCount = 0;
+    var totalSize = 0;
+
+    // Durchlaufen Sie jede Zeile und extrahieren Sie die Größe der Datei, wenn eine gültige Zeile gefunden wird
+    for (var i = 0; i < lines.length; i++) {
+        var line = lines[i];
+        var sizeMatch = line.match(/(\d+)\s*bytes/i);
+
+        if (sizeMatch) {
+            fileCount++;
+            totalSize += parseInt(sizeMatch[1]);
+        }
+    }
+
+    // Formatieren Sie die Gesamtgröße in Bytes, Kilobytes, Megabytes und Gigabytes
+    var totalBytes = totalSize + ' bytes';
+    var totalKilobytes = (totalSize / 1024).toFixed(2) + ' KB';
+    var totalMegabytes = (totalSize / (1024 * 1024)).toFixed(2) + ' MB';
+    var totalGigabytes = (totalSize / (1024 * 1024 * 1024)).toFixed(2) + ' GB';
+
+    // Erstellen Sie die Ausgabe und fügen Sie sie dem DOM hinzu
+    var output = `
+        <h2>Generiertes Formular</h2>
+        <p>Anzahl der Dateien: ${fileCount}</p>
+        <p>Gesamtgröße:</p>
+        <ul>
+            <li>${totalBytes}</li>
+            <li>${totalKilobytes}</li>
+            <li>${totalMegabytes}</li>
+            <li>${totalGigabytes}</li>
+        </ul>
+    `;
+
+    document.getElementById('output').innerHTML = output;
+}
+</script>
+
+</body>
+</html>
