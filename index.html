@@ -1,62 +1,108 @@
-<!doctype html>
-<html>
-<script type="text/javascript">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ETHZ.size berechnen</title>
+    <!-- Fügen Sie Bootstrap-CSS hinzu (Sie können dies entsprechend Ihrem Projekt anpassen) -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body class="container">
 
-            function ausrechnen() 
-            {
-                var antwort_b = 0;
+<div class="jumbotron mt-4">
+    <h1 class="display-4">ETHZ.size berechnen</h1>
+    <p class="lead">Gemäss den Zeilen aus dem Uploadformular im Workflow (<a href="./einzel.html">altes Formular</a>)</p>
 
-                if (document.getElementById("datei1").value) {antwort_b += parseFloat(document.getElementById("datei1").value);}
-                if (document.getElementById("datei2").value) {antwort_b += parseFloat(document.getElementById("datei2").value);}
-                if (document.getElementById("datei3").value) {antwort_b += parseFloat(document.getElementById("datei3").value);}
-                if (document.getElementById("datei4").value) {antwort_b += parseFloat(document.getElementById("datei4").value);}
-                if (document.getElementById("datei5").value) {antwort_b += parseFloat(document.getElementById("datei5").value);}
-                if (document.getElementById("datei6").value) {antwort_b += parseFloat(document.getElementById("datei6").value);}
-                if (document.getElementById("datei7").value) {antwort_b += parseFloat(document.getElementById("datei7").value);}
-                if (document.getElementById("datei8").value) {antwort_b += parseFloat(document.getElementById("datei8").value);}
-                if (document.getElementById("datei9").value) {antwort_b += parseFloat(document.getElementById("datei9").value);}
-                if (document.getElementById("datei10").value) {antwort_b += parseFloat(document.getElementById("datei10").value);}
-                if (document.getElementById("datei11").value) {antwort_b += parseFloat(document.getElementById("datei11").value);}
-                if (document.getElementById("datei12").value) {antwort_b += parseFloat(document.getElementById("datei12").value);}
+</div>
 
-                var antwort_kb = Math.round((antwort_b / 1024) * 100) / 100 ;
-                var antwort_mb = Math.round((antwort_kb / 1024) * 100) / 100 ;
-                var antwort_gb = Math.round((antwort_mb / 1024) * 100) / 100 ;
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="fileInfo">Eingabe Dateiinformationen:</label>
+            <textarea class="form-control" id="fileInfo" placeholder="Fügen Sie Dateiinformationen ein..." rows="8"></textarea>
+        </div>
+        <div>
+        <button class="btn btn-primary" onclick="generateForm()">Formular generieren</button>
+        </div>
+        <div id="output"></div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="alert alert-info" role="alert">
+            <h4 class="alert-heading">Anleitung:</h4>
+            <p> Diese Formular zählt die Anzahl Dateien und das Total der Grössen zusammen und gibt es in bytes, KB, MB und GB aus. </p>
+            <hr>
+            <p class="mb-0">
+                Bitte alle Zeilen mit Dateien unter "Hochgeladenen Dateien" kopieren und einfügen. Alle Zeilen ohne Datei-Informationen werden bei der Berechnung ignoriert: 
+                            <a href="screenshot.png" target="_blank">
+                <img src="screenshot.png" alt="Screenshot" class="img-fluid mt-3">
+            </a>
+            </p>
+        </div>
+
+        
+    </div>
+</div>
+
+<!-- Fügen Sie Bootstrap-JS hinzu (Sie können dies entsprechend Ihrem Projekt anpassen) -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 
-                document.getElementById("resultat_b").innerHTML = antwort_b + " B";
-                document.getElementById("resultat_kb").innerHTML = antwort_kb + " kB";
-                document.getElementById("resultat_mb").innerHTML = antwort_mb + " MB";
-                document.getElementById("resultat_gb").innerHTML = antwort_gb + " GB";
-            };
-        </script>
-    <head>
-        <meta charset="utf-8"> <title>ethz.size berechnen</title> </head>
-    <body>
-        <h1>ethz.size berechnen</h1>
-        <form>
-            <p>Grösse Datei 01 in Byte: <input type="number" id="datei1"> </p>
-            <p>Grösse Datei 02 in Byte: <input type="number" id="datei2"> </p>
-            <p>Grösse Datei 03 in Byte: <input type="number" id="datei3"> </p>
-            <p>Grösse Datei 04 in Byte: <input type="number" id="datei4"> </p>
-            <p>Grösse Datei 05 in Byte: <input type="number" id="datei5"> </p>
-            <p>Grösse Datei 06 in Byte: <input type="number" id="datei6"> </p>
-            <p>Grösse Datei 07 in Byte: <input type="number" id="datei7"> </p>
-            <p>Grösse Datei 08 in Byte: <input type="number" id="datei8"> </p>
-            <p>Grösse Datei 09 in Byte: <input type="number" id="datei9"> </p>
-            <p>Grösse Datei 10 in Byte: <input type="number" id="datei10"> </p>
-            <p>Grösse Datei 11 in Byte: <input type="number" id="datei11"> </p>
-            <p>Grösse Datei 12 in Byte: <input type="number" id="datei12"> </p>
+<script>
+function generateForm() {
+    // Holen Sie den Inhalt des Textfelds
+    var fileInfo = document.getElementById('fileInfo').value.trim();
 
-            <input type="button" name="Ausrechnen" onclick="ausrechnen()" value="Ausrechnen">
-        </form>
-        <h2>Das Total ist:</h2>
-        <table style="text-align: right;">
-        <tr><td style="min-width: 60px; font-weight: bold;" id="resultat_b"></td></tr>
-        <tr><td style="font-weight: bold;" id="resultat_kb"></td></tr>
-        <tr><td style="font-weight: bold;" id="resultat_mb"></td></tr>
-        <tr><td style="font-weight: bold;" id="resultat_gb"></td></tr>
+    // Teilen Sie den Inhalt in Zeilen auf
+    var lines = fileInfo.split('\n');
 
-        </table>
-    </body> 
+    // Zählen Sie die Anzahl der Dateien und berechnen Sie die Gesamtgröße
+    var fileCount = 0;
+    var totalSize = 0;
+
+    // Durchlaufen Sie jede Zeile und extrahieren Sie die Größe der Datei, wenn eine gültige Zeile gefunden wird
+    for (var i = 0; i < lines.length; i++) {
+        var line = lines[i];
+        var sizeMatch = line.match(/(\d+)\s*bytes/i);
+
+        if (sizeMatch) {
+            fileCount++;
+            totalSize += parseInt(sizeMatch[1]);
+        }
+    }
+
+    // Formatieren Sie die Gesamtgröße in Bytes, Kilobytes, Megabytes und Gigabytes
+    var totalBytes = totalSize + ' bytes';
+    var totalKilobytes = (totalSize / 1024).toFixed(2) + ' kB';
+    var totalMegabytes = (totalSize / (1024 * 1024)).toFixed(2) + ' MB';
+    var totalGigabytes = (totalSize / (1024 * 1024 * 1024)).toFixed(2) + ' GB';
+
+    // Erstellen Sie die Ausgabe und fügen Sie sie dem DOM hinzu
+    var output = `
+         <div class="card mt-3">
+            <div class="card-body">
+                <h5 class="card-title">Ausgabe</h5>
+                <p class="card-text">
+                  <p>Anzahl der Dateien: ${fileCount}</p>
+                <p>Gesamtgröße:</p>
+                <ul>
+                    <li>${totalBytes}</li>
+                    <li>${totalKilobytes}</li>
+                    <li>${totalMegabytes}</li>
+                    <li>${totalGigabytes}</li>
+                </ul>
+                </p>
+            </div>
+        </div>
+
+      
+    `;
+
+    document.getElementById('output').innerHTML = output;
+}
+</script>
+
+</body>
 </html>
