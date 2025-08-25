@@ -9,9 +9,9 @@
 </head>
 <body class="container">
 
-<div class="jumbotron mt-4">
-    <h1 class="display-4">ETHZ.size berechnen</h1>
-    <p class="lead">Gemäss den Zeilen aus dem Uploadformular im Workflow (<a href="./einzel.html">altes Formular</a>)</p>
+<div class="jumbotron mt-12">
+    <h1 class="display-12">ETHZ.size berechnen [DSpace 7]</h1>
+    <p class="lead">Gemäss den Angaben aus dem Uploadformular im Workflow</p>
 
 </div>
 
@@ -30,14 +30,22 @@
     <div class="col-md-6">
         <div class="alert alert-info" role="alert">
             <h4 class="alert-heading">Anleitung:</h4>
-            <p> Diese Formular zählt die Anzahl Dateien und das Total der Grössen zusammen und gibt es in bytes, KB, MB und GB aus. </p>
+            <p> Diese Formular zählt die Anzahl Dateien und das Total der Grössen zusammen und gibt es in bytes, KB, MB und GB aus. Alle Zeilen ohne Grössenangaben werden ignoriert</p>
             <hr>
-            <p class="mb-0">
-                Bitte alle Zeilen mit Dateien unter "Hochgeladenen Dateien" kopieren und einfügen. Alle Zeilen ohne Datei-Informationen werden bei der Berechnung ignoriert: 
-                            <a href="screenshot.png" target="_blank">
-                <img src="screenshot.png" alt="Screenshot" class="img-fluid mt-3">
+            <b>Folgende Angaben können als Input verwendet werden:</b>
+            <ul>
+                <li>
+                Die Zeilen zu den Dateien auf der Item-Page (Bitte alles anzeigen lassen mit "Mehr anzeigen/Show more"): 
+                            <a href="screenshot2.png" target="_blank">
+                <img src="screenshot2.png" alt="Screenshot" class="img-fluid mt-3">
             </a>
-            </p>
+            </li>
+                <li> 
+                Die Angaben zu den Dateien unter "Dateiupload und Zugriffsrechte" im Submissionformular: 
+                            <a href="screenshot.png" target="_blank">
+                <img src="screenshot.png" alt="Screenshot" class="img-fluid mt-3"></li>
+            </ul>
+
         </div>
 
         
@@ -52,52 +60,62 @@
 
 <script>
 function generateForm() {
-    // Holen Sie den Inhalt des Textfelds
     var fileInfo = document.getElementById('fileInfo').value.trim();
-
-    // Teilen Sie den Inhalt in Zeilen auf
     var lines = fileInfo.split('\n');
 
-    // Zählen Sie die Anzahl der Dateien und berechnen Sie die Gesamtgröße
     var fileCount = 0;
-    var totalSize = 0;
+    var totalSizeBytes = 0;
 
-    // Durchlaufen Sie jede Zeile und extrahieren Sie die Größe der Datei, wenn eine gültige Zeile gefunden wird
     for (var i = 0; i < lines.length; i++) {
         var line = lines[i];
-        var sizeMatch = line.match(/(\d+)\s*bytes/i);
+
+        // Suche nach Größenangaben mit Einheit
+        var sizeMatch = line.match(/(\d+(\.\d+)?)\s*(B|KB|MB|GB)/i);
 
         if (sizeMatch) {
             fileCount++;
-            totalSize += parseInt(sizeMatch[1]);
+            var size = parseFloat(sizeMatch[1]);
+            var unit = sizeMatch[3].toUpperCase();
+
+            // Umrechnung in Bytes
+            switch (unit) {
+                case 'B':
+                    totalSizeBytes += size;
+                    break;
+                case 'KB':
+                    totalSizeBytes += size * 1024;
+                    break;
+                case 'MB':
+                    totalSizeBytes += size * 1024 * 1024;
+                    break;
+                case 'GB':
+                    totalSizeBytes += size * 1024 * 1024 * 1024;
+                    break;
+            }
         }
     }
 
-    // Formatieren Sie die Gesamtgröße in Bytes, Kilobytes, Megabytes und Gigabytes
-    var totalBytes = totalSize + ' bytes';
-    var totalKilobytes = (totalSize / 1024).toFixed(2) + ' kB';
-    var totalMegabytes = (totalSize / (1024 * 1024)).toFixed(2) + ' MB';
-    var totalGigabytes = (totalSize / (1024 * 1024 * 1024)).toFixed(2) + ' GB';
+    var totalBytes = totalSizeBytes.toFixed(0) + ' Bytes';
+    var totalKilobytes = (totalSizeBytes / 1024).toFixed(2) + ' KB';
+    var totalMegabytes = (totalSizeBytes / (1024 * 1024)).toFixed(2) + ' MB';
+    var totalGigabytes = (totalSizeBytes / (1024 * 1024 * 1024)).toFixed(2) + ' GB';
 
-    // Erstellen Sie die Ausgabe und fügen Sie sie dem DOM hinzu
     var output = `
-         <div class="card mt-3">
+        <div class="card mt-3">
             <div class="card-body">
                 <h5 class="card-title">Ausgabe</h5>
                 <p class="card-text">
-                  <p>Anzahl der Dateien: ${fileCount}</p>
-                <p>Gesamtgröße:</p>
-                <ul>
-                    <li>${totalBytes}</li>
-                    <li>${totalKilobytes}</li>
-                    <li>${totalMegabytes}</li>
-                    <li>${totalGigabytes}</li>
-                </ul>
+                    <p>Anzahl der Dateien: ${fileCount}</p>
+                    <p>Gesamtgröße:</p>
+                    <ul>
+                        <li>${totalBytes}</li>
+                        <li>${totalKilobytes}</li>
+                        <li>${totalMegabytes}</li>
+                        <li>${totalGigabytes}</li>
+                    </ul>
                 </p>
             </div>
         </div>
-
-      
     `;
 
     document.getElementById('output').innerHTML = output;
